@@ -1,30 +1,16 @@
 package com.hard.game;
 
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+public class Point extends Entity {
 
-public class Point {
-
-	int size = 20;
 	boolean claimable = true;
-
-	int x, y;
 	
-	public Point (int x, int y) {
-		this.x = x;
-		this.y = y;
+	public Point(int x, int y) {
+		super("graphics/chest.png", x, y, 30);
 	}
 	
-	public void draw(ShapeRenderer shape) {
-		shape.setColor(0, 0, 0, 1);
-        shape.rect(x, y, size, size);
-		shape.setColor(250/255f, 250/255f, 0, 1);
-        shape.rect(x+2, y+2, size-4, size-4);
-    }
-	
 	public boolean checkCollision(Player player) {
-		if(collidesWith(player)){
+		if(collidesWith(player) && claimable){
             claimable = false;
-            player.score();
             return true;
         }
 		return false;

@@ -1,74 +1,55 @@
 package com.hard.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 
-public class Player {
-	
-	int speed = 5, size = 25;
+public class Player extends Entity {
 
-	int x, y, xStart, yStart;
-	int deaths, score, highScore, currentLevel;
+	int speed = 5, deaths = 0, score = 0, highScore = 0;
+	int currentLevel;
 	
-	Sound deathSound = Gdx.audio.newSound(Gdx.files.internal("death.wav"));
-	Sound pointSound = Gdx.audio.newSound(Gdx.files.internal("point.wav"));
-	Sound levelSound = Gdx.audio.newSound(Gdx.files.internal("level.wav"));
+	Sound deathSound = Gdx.audio.newSound(Gdx.files.internal("sounds/death.wav"));
+	Sound pointSound = Gdx.audio.newSound(Gdx.files.internal("sounds/point.wav"));
+	Sound levelSound = Gdx.audio.newSound(Gdx.files.internal("sounds/level.wav"));
 
-	
-	public Player (int xStart, int yStart, int deaths, int score, int levelNumber) {
-		this.x = xStart;
-		this.y = yStart;
-		this.xStart = xStart;
-		this.yStart = yStart;
-		this.deaths = deaths;
-		this.score = score;
-		this.currentLevel = levelNumber;
+	public Player (int levelNumber) {
+		super("graphics/character.png", 0, 0, 25);
+		currentLevel = levelNumber;
 	}
 	
-	public void update(Level level) {
-		 if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)){
-			 if (x <= level.minWidth) {
-				 x = level.minWidth;
-			 }
-			 else
-				 x -= speed;
-		 }
-		 if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)){
-			 if (x + size >= level.maxWidth) {
-				 x = level.maxWidth - size;
-			 }
-			 else
-				 x += speed;
-		 }
-		 if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)){
-			 if (y + size >= level.maxHeight) {
-				 y = level.maxHeight - size;
-			 }
-			 else
-				 y += speed;
-		 }
-		 if(Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)){
-			 if (y <= level.minHeight) {
-				  y = level.minHeight;
-			 }
-			 else
-				 y -= speed;	
-		 }
+	public void update(Map map) {	
+		int xTemp = x, yTemp = y;
+		if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)){
+			yTemp += speed;
+			direction = 1;
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)){
+			yTemp -= speed;	
+			direction = 0;
+		}
+		
+		if(map.isWalkable(x, (yTemp - y > 0) ? yTemp + size : yTemp)) {
+			y = yTemp;
+		}
+		
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)){
+			xTemp -= speed;
+			direction = 2;
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)){
+			xTemp += speed;
+			direction = 3;
+		}
+		
+		if(map.isWalkable((xTemp - x > 0) ? xTemp + size : xTemp, y)) {
+			x = xTemp;
+		}
 	}
 	
-	public void draw(ShapeRenderer shape) {
-		shape.setColor(0, 0, 0, 1);
-        shape.rect(x, y, size, size);
-		shape.setColor(1, 0, 0, 1);
-        shape.rect(x+2, y+2, size-4, size-4);
-    }
-	
-	public void reset()
-	{
+	public void reset()	{
 		deathSound.play();
-        try
+		try
 		{
 		    Thread.sleep(1000);
 		}
@@ -80,19 +61,30 @@ public class Player {
 		score = 0;
 		currentLevel = 1;
 	}
-	public void score()
-	{
+	
+	public void score() {
 		++score;
 		if(highScore < score)
 		{
 			highScore = score;
 		}
 		pointSound.play();
-		checkIfLevelUp();
+		
+		if(checkIfLevelUp()) {
+			++currentLevel;
+			levelSound.play();
+			try
+			{
+			    Thread.sleep(1000);
+			}
+			catch(InterruptedException ex)
+			{
+			    Thread.currentThread().interrupt();
+			}
+		}
 	}
 	
-	public boolean checkIfLevelUp()
-	{
+	private boolean checkIfLevelUp() {
 		boolean levelUp = false;
 		switch(currentLevel)
 		{
@@ -137,19 +129,6 @@ public class Player {
 			}
 		}
 		}
-		if(levelUp)
-		{
-			++currentLevel;
-			levelSound.play();
-			try
-			{
-			    Thread.sleep(1000);
-			}
-			catch(InterruptedException ex)
-			{
-			    Thread.currentThread().interrupt();
-			}
-        }
 		return levelUp;
 	}
 }
