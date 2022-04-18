@@ -12,6 +12,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuBar;
 import javafx.stage.Stage;
 
@@ -35,7 +37,6 @@ public abstract class SceneController implements Initializable {
 		Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(resourceName));
 		Stage stage = (Stage)menuBar.getScene().getWindow();
 		Scene scene = new Scene(root);
-		stage.setTitle("Student Registration System | About");
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -55,4 +56,12 @@ public abstract class SceneController implements Initializable {
 	
 	@FXML
 	protected abstract void submit(ActionEvent event) throws IOException;
+	
+	public static void showAlert(String title, String text) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(text);
+		alert.showAndWait();
+	}
 }

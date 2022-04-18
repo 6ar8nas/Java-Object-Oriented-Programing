@@ -15,7 +15,7 @@ import com.regsystem.data.DataSet;
 import com.regsystem.data.Student;
 
 
-public class ImporterXLSX implements Importer {
+public class ImporterXLSX implements Importer, IODevice {
 	String fileName;
 	
 	public ImporterXLSX(String fileName) {
@@ -24,9 +24,11 @@ public class ImporterXLSX implements Importer {
 	
 	@Override
 	public void fillData() throws IOException {
+		FileInputStream inputStream = null;
+		Workbook workbook = null;
 		try {
-			FileInputStream inputStream = new FileInputStream(new File(getClass().getClassLoader().getResource(Importer.returnFilePath(fileName)).toURI()));
-			Workbook workbook = new XSSFWorkbook(inputStream);
+			inputStream = new FileInputStream(new File(IODevice.returnFilePath(fileName)));
+			workbook = new XSSFWorkbook(inputStream);
 			Sheet firstSheet = workbook.getSheetAt(0);
 			Iterator<Row> rowIterator = firstSheet.iterator();
 			rowIterator.next();
@@ -71,10 +73,18 @@ public class ImporterXLSX implements Importer {
 				DataSet.getInstance().addStudent(s);
 			}
 			workbook.close();
+			inputStream.close();
+			Importer.showAlert("Success","Data was successfully imported from "+ fileName + ".");
 		} catch (Exception e){
-			
-		}
-		
+			Importer.printExceptionMessage();
+		} finally {
+			if(inputStream != null) {
+				inputStream.close();
+			}
+			if(workbook != null) {
+				workbook.close();
+			}
+		}		
 	}
 
 }

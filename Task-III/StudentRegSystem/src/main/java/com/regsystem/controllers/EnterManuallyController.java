@@ -41,6 +41,7 @@ public class EnterManuallyController extends SceneController implements Initiali
 		
 		Student s = new Student(name, surname, studies, year, group);
 		DataSet.getInstance().addStudent(s);
+		SceneController.showAlert("Success","A student named "+ name + " " +  surname + " was added.");
 	}
 	
 	@Override

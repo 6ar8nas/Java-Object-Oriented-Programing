@@ -1,12 +1,13 @@
 package com.regsystem.io;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+
 import com.regsystem.data.DataSet;
 import com.regsystem.data.Student;
 
-public class ImporterCSV implements Importer {
+public class ImporterCSV implements Importer, IODevice {
 	String fileName;
 	
 	public ImporterCSV(String fileName) {
@@ -17,14 +18,13 @@ public class ImporterCSV implements Importer {
 	public void fillData() throws IOException {
 		BufferedReader reader = null;
 		String line;
-		try {
-			reader = new BufferedReader(new InputStreamReader(getClass().getClassLoader().
-					getResource(Importer.returnFilePath(fileName)).openConnection().getInputStream()));
+		try (FileReader freader = new FileReader(IODevice.returnFilePath(fileName))) {
+			reader = new BufferedReader(freader);
 			int linesRead = 0;
 			while((line = reader.readLine()) != null) {
 				if(linesRead == 0)
 				{
-					linesRead++;
+					++linesRead;
 					continue;
 				}
 				String[] row = line.split(",");
@@ -38,9 +38,9 @@ public class ImporterCSV implements Importer {
 				Student s = new Student(name, surname, programme, year, group);
 				DataSet.getInstance().addStudent(s);
 			}
-			
+			Importer.showAlert("Success","Data was successfully imported from "+ fileName + ".");
 		} catch (Exception e) {
-
+			Importer.printExceptionMessage();
 		} finally {
 			if(reader != null)
 				reader.close();

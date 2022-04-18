@@ -1,5 +1,8 @@
 package com.regsystem.data;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 public class Student {
 private static int lastId = 0;
 	
@@ -9,7 +12,7 @@ private static int lastId = 0;
 	private int year;
 	private int group;
 	private String studyProgramme;
-	private DateEntry[] attendenceValues;
+	private ArrayList<DateEntry> attendenceValues;
 	
 	public Student(String name, String surname, String studyProgramme, int year, int group) {
 		this.id = nextId();
@@ -18,6 +21,7 @@ private static int lastId = 0;
 		this.year = year;
 		this.group = group;
 		this.studyProgramme = studyProgramme;
+		this.attendenceValues = new ArrayList<DateEntry>();
 	}
 	
 	private static int nextId() {
@@ -48,7 +52,7 @@ private static int lastId = 0;
 		return group;
 	}
 	
-	public DateEntry[] getAttendenceValues() {
+	public ArrayList<DateEntry> getAttendanceValues() {
 		return attendenceValues;
 	}
 	
@@ -72,7 +76,25 @@ private static int lastId = 0;
 		group = value;
 	}
 	
-	public void setAttendenceValues() {
-		return ; // TODO
+	public void setAttendanceValues(LocalDate date, boolean value) {
+		DateEntry inst = null;
+		if(findDate(date) != null) {
+			inst = findDate(date);
+			inst.setAttendance(value);
+		}
+		else {
+			attendenceValues.add(new DateEntry(date, value));
+		}
+	}
+	
+	public DateEntry findDate(LocalDate date) {
+		for (DateEntry eDate : attendenceValues) {
+			if(eDate.getDate() != null) {
+				if (eDate.getDate().equals(date)) {
+					return eDate;
+				}
+			}
+		}
+		return null;
 	}
 }

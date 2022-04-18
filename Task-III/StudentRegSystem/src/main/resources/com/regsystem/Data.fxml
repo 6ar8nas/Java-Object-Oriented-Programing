@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="579.0" prefWidth="767.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.regsystem.controllers.DataController">
+<VBox prefHeight="580.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.regsystem.controllers.DataController">
    <children>
       <MenuBar fx:id="menuBar">
          <menus>
@@ -32,14 +32,14 @@
          </font>
       </Label>
       <Separator prefHeight="16.0" prefWidth="640.0" />
-      <TableView fx:id="table" prefHeight="411.0" prefWidth="767.0">
+      <TableView fx:id="table" prefHeight="430.0" prefWidth="767.0">
         <columns>
           <TableColumn fx:id="idCol" prefWidth="40.0" text="#" />
-          <TableColumn fx:id="nameCol" prefWidth="75.0" text="Name" />
-          <TableColumn fx:id="surnameCol" prefWidth="75.0" text="Surname" />
-          <TableColumn fx:id="programmeCol" prefWidth="75.0" text="Programme" />
-          <TableColumn fx:id="yearCol" prefWidth="35.0" text="Year" />
-          <TableColumn fx:id="groupCol" prefWidth="45.0" text="Group" />
+          <TableColumn fx:id="nameCol" prefWidth="110.39995956420898" text="Name" />
+          <TableColumn fx:id="surnameCol" prefWidth="127.20005798339844" text="Surname" />
+          <TableColumn fx:id="programmeCol" prefWidth="191.2000732421875" text="Programme" />
+          <TableColumn fx:id="yearCol" prefWidth="129.5999755859375" text="Year" />
+          <TableColumn fx:id="groupCol" prefWidth="121.60003662109375" text="Group" />
         </columns>
       </TableView>
       <HBox prefHeight="29.0" prefWidth="640.0">
@@ -49,7 +49,7 @@
             <Label alignment="CENTER" prefHeight="30.0" prefWidth="136.0" text="Field to Change" />
             <ChoiceBox fx:id="fieldChoiceBox" prefHeight="26.0" prefWidth="155.0" />
             <Label alignment="CENTER" prefHeight="30.0" prefWidth="116.0" text="New value" />
-            <TextField fx:id="newValueTextField" prefHeight="26.0" prefWidth="176.0" />
+            <TextField fx:id="newValueTextField" prefHeight="26.0" prefWidth="156.0" />
          </children>
          <padding>
             <Insets top="10.0" />
@@ -57,8 +57,8 @@
       </HBox>
       <HBox alignment="BOTTOM_CENTER" prefHeight="36.0" prefWidth="767.0" spacing="400.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#deleteStudentEntry" text="Delete student" />
-            <Button mnemonicParsing="false" onAction="#submit" text="Change value" />
+            <Button mnemonicParsing="false" onAction="#deleteStudentEntry" prefHeight="26.0" prefWidth="104.0" text="Delete student" />
+            <Button mnemonicParsing="false" onAction="#submit" prefHeight="26.0" prefWidth="104.0" text="Change value" />
          </children>
          <VBox.margin>
             <Insets top="10.0" />

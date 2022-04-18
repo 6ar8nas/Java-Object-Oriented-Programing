@@ -22,7 +22,7 @@ public class DataController extends SceneController{
 	@FXML
 	private TableColumn<Student, String> nameCol, surnameCol, programmeCol; 
 	@FXML
-	private TableColumn<Student, Integer> idCol, yearCol, groupCol; 
+	private TableColumn<Student, Integer> idCol, yearCol, groupCol;
 	@FXML
 	private ChoiceBox<String> fieldChoiceBox;
 	@FXML
@@ -82,6 +82,10 @@ public class DataController extends SceneController{
 				break;
 			}
 			}
+			SceneController.showAlert("Success","The selected value on student (ID: " + idToChange + ") was successfully edited.");
+		}
+		else {
+			SceneController.showAlert("Information","There is no such student (ID: " + idToChange + ").");
 		}
 		newValueTextField.clear();
 		idTextField.clear();
@@ -102,7 +106,15 @@ public class DataController extends SceneController{
 	@FXML
 	protected void deleteStudentEntry(ActionEvent event) throws IOException {
 		int idToChange = Integer.parseInt("0" + idTextField.getText());
-		DataSet.getInstance().removeStudent(idToChange);
-		updateTable();
+		if(DataSet.getInstance().findInstanceByID(idToChange) != null) {
+			DataSet.getInstance().removeStudent(idToChange);
+			updateTable();
+			SceneController.showAlert("Success","The student (ID: " + idToChange + ") was successfully deleted from the list.");
+		}
+		else {
+			SceneController.showAlert("Information","There is no such student (ID: " + idToChange + ").");
+		}
+		idTextField.clear();
+
 	}
 }

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="485.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.regsystem.controllers.AttendanceController">
+   <children>
+      <MenuBar fx:id="menuBar" prefHeight="0.0" prefWidth="895.0">
+         <menus>
+            <Menu mnemonicParsing="false" text="Help">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#openAbout" text="About" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <Label alignment="CENTER" prefHeight="22.0" prefWidth="850.0" text="Fill in the students' attendence information">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+         <VBox.margin>
+            <Insets top="2.0" />
+         </VBox.margin>
+      </Label>
+      <Separator prefHeight="7.0" prefWidth="955.0" />
+      <HBox>
+         <children>
+            <VBox prefHeight="384.0" prefWidth="729.0">
+               <children>
+                  <HBox prefHeight="30.0" prefWidth="500.0">
+                     <children>
+                        <DatePicker fx:id="newDate">
+                           <HBox.margin>
+                              <Insets left="250.0" />
+                           </HBox.margin>
+                        </DatePicker>
+                        <Button mnemonicParsing="false" onAction="#addDate" prefHeight="26.0" prefWidth="70.0" text="Add">
+                           <HBox.margin>
+                              <Insets left="50.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Separator prefHeight="16.0" prefWidth="640.0" />
+                  <TableView fx:id="table" prefHeight="335.0" prefWidth="650.0">
+                     <columns>
+                        <TableColumn fx:id="idCol" prefWidth="28.79998779296875" text="#" />
+                        <TableColumn fx:id="nameCol" prefWidth="60.79998779296875" text="Name" />
+                        <TableColumn fx:id="surnameCol" prefWidth="66.39999389648438" text="Surname" />
+                        <TableColumn fx:id="programmeCol" prefWidth="75.20001220703125" text="Programme" />
+                        <TableColumn fx:id="yearCol" prefWidth="34.4000244140625" text="Year" />
+                        <TableColumn fx:id="groupCol" prefWidth="44.79998779296875" text="Group" />
+                     </columns>
+                  </TableView>
+               </children>
+            </VBox>
+            <AnchorPane>
+               <children>
+                  <Label alignment="CENTER" prefHeight="30.0" prefWidth="205.0" text="Change attendence values">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="1.0" layoutY="33.0" prefHeight="34.0" prefWidth="70.0" text="Student #" />
+                  <TextField fx:id="idTextField" layoutX="71.0" layoutY="37.0" prefHeight="26.0" prefWidth="84.0" />
+                  <RadioButton fx:id="rbStudent" layoutX="166.0" layoutY="35.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="17.0" />
+                  <Label alignment="CENTER" layoutX="1.0" layoutY="68.0" prefHeight="34.0" prefWidth="70.0" text="Group #" />
+                  <TextField fx:id="groupIdTextField" layoutX="71.0" layoutY="72.0" prefHeight="26.0" prefWidth="84.0" />
+                  <RadioButton fx:id="rbGroup" layoutX="166.0" layoutY="70.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="17.0" />
+                  <Label alignment="CENTER" layoutY="111.0" prefHeight="30.0" prefWidth="70.0" text="Date" />
+                  <ChoiceBox fx:id="dateChoiceBox" layoutX="70.0" layoutY="113.0" prefHeight="26.0" prefWidth="106.0" />
+                  <Label alignment="CENTER" layoutX="1.0" layoutY="148.0" prefHeight="30.0" prefWidth="70.0" text="New value" />
+                  <ChoiceBox fx:id="valueChoiceBox" layoutX="70.0" layoutY="150.0" prefHeight="26.0" prefWidth="106.0" />
+                  <Button layoutX="76.0" layoutY="186.0" mnemonicParsing="false" onAction="#submit" text="Change" />
+                  <Label alignment="CENTER" layoutY="220.0" prefHeight="30.0" prefWidth="205.0" text="Filter">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <DatePicker fx:id="filter1Date" layoutX="17.0" layoutY="262.0" />
+                  <Label alignment="CENTER" layoutX="75.0" layoutY="250.0" prefHeight="12.0" prefWidth="54.0" text="From">
+                     <font>
+                        <Font size="8.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="88.0" layoutY="288.0" prefHeight="12.0" prefWidth="33.0" text="To">
+                     <font>
+                        <Font size="8.0" />
+                     </font>
+                  </Label>
+                  <DatePicker fx:id="filter2Date" layoutX="14.0" layoutY="300.0" />
+                  <Button layoutX="51.0" layoutY="326.0" mnemonicParsing="false" onAction="#createFilter" prefHeight="26.0" prefWidth="106.0" text="Create filter" />
+                  <Separator layoutX="3.0" layoutY="220.0" prefWidth="200.0" />
+                  <Button layoutX="51.0" layoutY="357.0" mnemonicParsing="false" onAction="#removeFilter" prefHeight="26.0" prefWidth="106.0" text="Remove filter" />
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+      <Separator prefHeight="9.0" prefWidth="946.0" />
+      <AnchorPane prefHeight="26.0" prefWidth="341.0">
+         <VBox.margin>
+            <Insets bottom="5.0" />
+         </VBox.margin>
+         <children>
+            <Button layoutX="392.0" mnemonicParsing="false" onAction="#getBack" prefHeight="26.0" prefWidth="70.0" text="Back" />
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

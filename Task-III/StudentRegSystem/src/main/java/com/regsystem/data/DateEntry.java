@@ -1,15 +1,21 @@
 package com.regsystem.data;
 
+import java.time.LocalDate;
+
 public class DateEntry {
-	private int date;
-	private boolean attendance;
+	private LocalDate date;
+	private boolean attendance = false;
 	
-	public DateEntry(int date) {
+	public DateEntry(LocalDate date, boolean attendance) {
 		this.date = date;
-		this.attendance = true;
+		this.attendance = attendance;
+	}
+	public DateEntry(LocalDate date) {
+		this.date = date;
+		this.attendance = false;
 	}
 	
-	public int getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 	
@@ -17,7 +23,17 @@ public class DateEntry {
 		return attendance;
 	}
 	
-	public void setAttendence(boolean value) {
+	public void setAttendance(boolean value) {
 		this.attendance = value;
 	}
+	
+	public boolean isFiltered(LocalDate filter1, LocalDate filter2) {
+		if(date.isAfter(filter1) || date.isEqual(filter1)) {
+			if(date.isBefore(filter2) || date.isEqual(filter2)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 }
